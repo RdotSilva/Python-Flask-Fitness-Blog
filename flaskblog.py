@@ -1,6 +1,10 @@
 from flask import Flask, render_template, url_for
+from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
+
+# Temporary secret key, will change this and make env variable later
+app.config["SECRET_KEY"] = "b745125d03ae68e8a939473072208d98"
 
 posts = [
     {
@@ -27,6 +31,13 @@ def home():
 @app.route("/about")
 def about():
     return render_template("about.html", title="About")
+
+
+# Registration route using the register form in forms.py
+@app.route("/register")
+def register():
+    form = RegistrationForm()
+    return render_template("register.html", title="Register", form=form)
 
 
 # Run in debug mode, avoiding the use of ENV variable with the flask run command
