@@ -40,6 +40,13 @@ def register():
     return render_template("register.html", title="Register", form=form)
 
 
+# Login route using the login form in forms.py
+@app.route("/login")
+def login():
+    form = RegistrationForm()
+    return render_template("login.html", title="Login", form=form)
+
+
 # Run in debug mode, avoiding the use of ENV variable with the flask run command
 if __name__ == "__main__":
     app.run(debug=True)
