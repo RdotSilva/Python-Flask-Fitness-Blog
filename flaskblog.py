@@ -46,9 +46,17 @@ def register():
 
 
 # Login route using the login form in forms.py
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    form = RegistrationForm()
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Temporary dummy validation
+        if form.email.data == "admin@blog.com" and form.password.data == "password":
+            flash("You have been logged in!", "success")
+            return redirect(url_for("home"))
+        else:
+            flash("Login unsuccessful. Check username or password", "danger")
+
     return render_template("login.html", title="Login", form=form)
 
 
