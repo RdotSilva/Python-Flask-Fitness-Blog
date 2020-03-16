@@ -22,6 +22,15 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError("Username is taken. Choose another username.")
 
+    # Check if email exists in db
+    def validate_email(self, email):
+        # Check for email and get first one there, if not return none
+        email = User.query.filter_by(email=email.data).first()
+        if email:
+            raise ValidationError(
+                "Email address already registered. Choose another email."
+            )
+
 
 class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
