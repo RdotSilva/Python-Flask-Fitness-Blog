@@ -1,4 +1,7 @@
-from models import User, Post
+from flask import render_template, url_for, flash, redirect
+from fitnessblog import app
+from fitnessblog.forms import RegistrationForm, LoginForm
+from fitnessblog.models import User, Post
 
 posts = [
     {

@@ -1,4 +1,4 @@
-from flaskblog import db
+from fitnessblog import db
 from datetime import datetime
 
 # DB models
