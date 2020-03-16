@@ -1,7 +1,9 @@
 from flask import render_template, url_for, flash, redirect
-from fitnessblog import app
 from fitnessblog.forms import RegistrationForm, LoginForm
 from fitnessblog.models import User, Post
+
+# These imports come from __init__.py - You can use the full package name instead of __init__.py (fitnessblog)
+from fitnessblog import app, db, bcrypt
 
 posts = [
     {
@@ -36,7 +38,20 @@ def about():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f"Account created for {form.username.data}!", "success")
+        # Hash password
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode(
+            "utf-8"
+        )
+
+        # Construct new user
+        user = User(
+            username=form.username.data, email=form.email.data, password=hashed_password
+        )
+        # Save user to db
+        db.session.add(user)
+        db.session.commit()
+
+        flash("Your account has been created. Please log in", "success")
         return redirect(url_for("home"))
 
     return render_template("register.html", title="Register", form=form)
