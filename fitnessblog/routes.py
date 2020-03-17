@@ -63,9 +63,12 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        # Get user in db by email
         user = User.query.filter_by(email=form.email.data).first()
+        # Check users hashed password matches typed password
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
+            # Send user to home page if login success
             return redirect(url_for("home"))
         else:
             flash("Login unsuccessful. Check email or password", "danger")
