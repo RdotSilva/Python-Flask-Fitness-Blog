@@ -1,5 +1,6 @@
 import os
 import secrets
+from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from fitnessblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from fitnessblog.models import User, Post
@@ -99,11 +100,17 @@ def save_picture(form_picture):
     # Split filename to get the file extension. Using _ as variable for f_name because it will be unused
     _, f_ext = os.path.splitext(form_picture.filename)
     # Create new picture file name using hex and file extension
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, "static/profile_pics", picture_fn)
+    picture_filename = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, "static/profile_pics", picture_filename)
+
+    # Resize picture
+    output_size = (125, 125)
+    image = Image.open(form_picture)
+    image.thumbnail(output_size)
+
     # Save profile picture to path above
-    form_picture.save(picture_path)
-    return picture_fn
+    image.save(picture_path)
+    return picture_filename
 
 
 # User account page
