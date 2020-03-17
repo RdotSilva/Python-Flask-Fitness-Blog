@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect
 from fitnessblog.forms import RegistrationForm, LoginForm
 from fitnessblog.models import User, Post
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user
 
 # These imports come from __init__.py - You can use the full package name instead of __init__.py (fitnessblog)
 from fitnessblog import app, db, bcrypt
@@ -80,3 +80,10 @@ def login():
             flash("Login unsuccessful. Check email or password", "danger")
 
     return render_template("login.html", title="Login", form=form)
+
+
+# Log user out and redirect to home page
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
