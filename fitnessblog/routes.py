@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect
 from fitnessblog.forms import RegistrationForm, LoginForm
 from fitnessblog.models import User, Post
-from flask_login import login_user
+from flask_login import login_user, current_user
 
 # These imports come from __init__.py - You can use the full package name instead of __init__.py (fitnessblog)
 from fitnessblog import app, db, bcrypt
@@ -37,6 +37,9 @@ def about():
 # Registration route using the register form in forms.py
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    # If user already signed in redirect to home page
+    if current_user.is_authenticated:
+        return redirect("home")
     form = RegistrationForm()
     if form.validate_on_submit():
         # Hash password
@@ -61,6 +64,9 @@ def register():
 # Login route using the login form in forms.py
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    # If user already signed in redirect to home page
+    if current_user.is_authenticated:
+        return redirect("home")
     form = LoginForm()
     if form.validate_on_submit():
         # Get user in db by email
