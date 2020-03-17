@@ -63,9 +63,8 @@ class UpdateAccountForm(FlaskForm):
     # Check if email exists in db
     def validate_email(self, email):
         if email.data != current_user.email:
-            # Check for email and get first one there, if not return none
-            email = User.query.filter_by(email=email.data).first()
-        if email:
-            raise ValidationError(
-                "Email address already registered. Choose another email."
-            )
+            user = User.query.filter_by(email=email.data).first()
+            if user:
+                raise ValidationError(
+                    "That email is taken. Please choose a different one."
+                )
