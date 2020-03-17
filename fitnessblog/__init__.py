@@ -19,4 +19,8 @@ bcrypt = Bcrypt(app)
 # Flask Login
 login_manager = LoginManager(app)
 
+# Set initial login view & message
+login_manager.login_view = "login"
+login_manager.login_message_category = "info"
+
 from fitnessblog import routes

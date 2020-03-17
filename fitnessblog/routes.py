@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect
 from fitnessblog.forms import RegistrationForm, LoginForm
 from fitnessblog.models import User, Post
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 # These imports come from __init__.py - You can use the full package name instead of __init__.py (fitnessblog)
 from fitnessblog import app, db, bcrypt
@@ -91,5 +91,6 @@ def logout():
 
 # User account page
 @app.route("/account")
+@login_required
 def account():
     return render_template("account.html", title="Account")
