@@ -56,7 +56,7 @@ def register():
         db.session.commit()
 
         flash("Your account has been created. Please log in", "success")
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
     return render_template("register.html", title="Register", form=form)
 
@@ -92,10 +92,20 @@ def logout():
 
 
 # User account page
-@app.route("/account")
+@app.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
     form = UpdateAccountForm()
+    # Check if form data is valid, update user account info in database, redirect to account page
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash("Your account has been updated!", "success")
+        return redirect(url_for("account"))
+    elif request.method == "GET":
+        form.username.data = current_user.username
+        form.email.data = current_user.email
     # Set profile picture image file
     image_file = url_for("static", filename="profile_pics/" + current_user.image_file)
     return render_template(
