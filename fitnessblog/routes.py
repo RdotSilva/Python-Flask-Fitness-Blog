@@ -1,6 +1,7 @@
 from flask import render_template, url_for, flash, redirect
 from fitnessblog.forms import RegistrationForm, LoginForm
 from fitnessblog.models import User, Post
+from flask_login import login_user
 
 # These imports come from __init__.py - You can use the full package name instead of __init__.py (fitnessblog)
 from fitnessblog import app, db, bcrypt
@@ -62,11 +63,11 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        # Temporary dummy validation
-        if form.email.data == "admin@blog.com" and form.password.data == "password":
-            flash("You have been logged in!", "success")
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
             return redirect(url_for("home"))
         else:
-            flash("Login unsuccessful. Check username or password", "danger")
+            flash("Login unsuccessful. Check email or password", "danger")
 
     return render_template("login.html", title="Login", form=form)
