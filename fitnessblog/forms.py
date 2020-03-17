@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 from fitnessblog.models import User
@@ -37,3 +38,30 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     remember = BooleanField("Remember Me")
     submit = SubmitField("Login")
+
+
+class UpdateAccountForm(FlaskForm):
+    username = StringField(
+        "Username", validators=[DataRequired(), Length(min=2, max=20)]
+    )
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Update")
+    # TODO: Add image update
+
+    # Check if username exists in db
+    def validate_username(self, username):
+        if username.data != current_user.username:
+            # Check for user and get first one there, if not return none
+            user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError("Username is taken. Choose another username.")
+
+    # Check if email exists in db
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            # Check for email and get first one there, if not return none
+            email = User.query.filter_by(email=email.data).first()
+        if email:
+            raise ValidationError(
+                "Email address already registered. Choose another email."
+            )
