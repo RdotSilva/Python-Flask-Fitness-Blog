@@ -95,15 +95,16 @@ def logout():
 
 # Save user profile picture
 def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)    
+    random_hex = secrets.token_hex(8)
     # Split filename to get the file extension. Using _ as variable for f_name because it will be unused
     _, f_ext = os.path.splitext(form_picture.filename)
     # Create new picture file name using hex and file extension
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    picture_path = os.path.join(app.root_path, "static/profile_pics", picture_fn)
     # Save profile picture to path above
     form_picture.save(picture_path)
     return picture_fn
+
 
 # User account page
 @app.route("/account", methods=["GET", "POST"])
@@ -114,6 +115,8 @@ def account():
     if form.validate_on_submit():
         # Check for picture data
         if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
