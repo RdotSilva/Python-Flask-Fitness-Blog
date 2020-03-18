@@ -9,21 +9,6 @@ from flask_login import login_user, current_user, logout_user, login_required
 # These imports come from __init__.py - You can use the full package name instead of __init__.py (fitnessblog)
 from fitnessblog import app, db, bcrypt
 
-posts = [
-    {
-        "author": "Ryan Silva",
-        "title": "Blog Post 1",
-        "content": "First post content",
-        "date_posted": "April 20, 2020",
-    },
-    {
-        "author": "Mike Silva",
-        "title": "Blog Post 2",
-        "content": "2nd post content",
-        "date_posted": "May 2, 2020",
-    },
-]
-
 # Handle multiple routes using the same function
 @app.route("/")
 @app.route("/home")
