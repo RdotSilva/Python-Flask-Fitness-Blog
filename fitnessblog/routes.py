@@ -145,6 +145,12 @@ def account():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
+        # Construct new post and save to db
+        post = Post(
+            title=form.title.data, content=form.content.data, author=current_user
+        )
+        db.session.add(post)
+        db.session.commit()
         flash("Your post has been created!", "success")
         return redirect(url_for("home"))
     return render_template("create_post.html", title="New Post", form=form)
