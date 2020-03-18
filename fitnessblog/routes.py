@@ -147,5 +147,5 @@ def new_post():
     if form.validate_on_submit():
         flash("Your post has been created!", "success")
         return redirect(url_for("home"))
-    return render_template("create_post.html", title="New Post")
+    return render_template("create_post.html", title="New Post", form=form)
 
