@@ -2,7 +2,7 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
-from fitnessblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from fitnessblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from fitnessblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -140,8 +140,12 @@ def account():
 
 
 # Create a new post
-@app.route("/post/new")
+@app.route("/post/new", methods=["GET", "POST"])
 @login_required
 def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        flash("Your post has been created!", "success")
+        return redirect(url_for("home"))
     return render_template("create_post.html", title="New Post")
 
