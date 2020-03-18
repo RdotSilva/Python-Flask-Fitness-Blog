@@ -14,6 +14,8 @@ from fitnessblog import app, db, bcrypt
 @app.route("/home")
 # url_for refers to the function name below (home)
 def home():
+    # Fetch all posts from db, then render posts to home view
+    posts = Post.query.all()
     return render_template("home.html", posts=posts)
 
 
