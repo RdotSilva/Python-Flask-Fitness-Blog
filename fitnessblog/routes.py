@@ -196,7 +196,7 @@ def delete_post(post_id):
 
 
 # Show all posts by specific user
-@app.route("/user/<str:username>")
+@app.route("/user/<string:username>")
 # url_for refers to the function name below (home)
 def user_posts(username):
     # Get page argument (start at default page 1)
