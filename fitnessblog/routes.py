@@ -14,8 +14,10 @@ from fitnessblog import app, db, bcrypt
 @app.route("/home")
 # url_for refers to the function name below (home)
 def home():
-    # Fetch all posts from db, then render posts to home view
-    posts = Post.query.all()
+    # Get page argument (start at default page 1)
+    page = request.args.get("page", 1, type=int)
+    # Fetch all posts from db using pagination, then render posts to home view
+    posts = Post.query.paginate(page=page, per_page=5)
     return render_template("home.html", posts=posts)
 
 
