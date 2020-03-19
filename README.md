@@ -15,7 +15,7 @@ pip install -r requirements.txt
 Run the python script command in terminal to start the Flask server
 
 ```
-python flaskblog.py
+python run.py
 ```
 
 ## Built With
