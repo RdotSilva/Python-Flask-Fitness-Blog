@@ -9,6 +9,7 @@
         {% if post.author == current_user %}
           <div>
             <a class="btn btn-secondary btn-sm m-1" href="{{ url_form('update_post', post_id=post.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
           </div>
         {% endif %}
       </div>
