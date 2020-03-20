@@ -2,7 +2,14 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
-from fitnessblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from fitnessblog.forms import (
+    RegistrationForm,
+    LoginForm,
+    UpdateAccountForm,
+    PostForm,
+    RequestResetForm,
+    ResetPasswordForm,
+)
 from fitnessblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -211,3 +218,14 @@ def user_posts(username):
         .paginate(page=page, per_page=5)
     )
     return render_template("user_posts.html", posts=posts, user=user)
+
+
+# Create a request for password reset
+@app.route("/reset_password", methods=["GET", "POST"])
+def reset_request():
+    # If user already signed in redirect to home page
+    if current_user.is_authenticated:
+        return redirect("home")
+    form = RequestResetForm()
+    return render_template("reset_request.html", title="Reset Password", form=form)
+
