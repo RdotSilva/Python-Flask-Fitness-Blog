@@ -1,8 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
+from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, MAIL_USER, MAIL_PASS
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_mail import Mail
 
 app = Flask(__name__)
 
@@ -22,5 +23,13 @@ login_manager = LoginManager(app)
 # Set initial login view & message
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
+
+# Mail config settings
+app.config["MAIL_SERVER"] = "smtp.googlemail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = MAIL_USER
+app.config["MAIL_PASSWORD"] = MAIL_PASS
+mail = Mail(app)
 
 from fitnessblog import routes
