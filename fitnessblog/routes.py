@@ -14,7 +14,8 @@ from fitnessblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
 # These imports come from __init__.py - You can use the full package name instead of __init__.py (fitnessblog)
-from fitnessblog import app, db, bcrypt
+from fitnessblog import app, db, bcrypt, mail
+from flask_mail import Message
 
 # Handle multiple routes using the same function
 @app.route("/")
@@ -220,9 +221,18 @@ def user_posts(username):
     return render_template("user_posts.html", posts=posts, user=user)
 
 
+# Send user reset password email with token
 def send_reset_email(user):
-    # TODO
-    pass
+    # Get token
+    token = user.get_reset_token()
+    # Send user email message with token
+    msg = Message(
+        "Password Reset Request",
+        sender="noreply@rdotsilva.com",
+        recipients=[user.email],
+    )
+    # Compose the email body
+    msg.body = f"To reset your email please visit the following link: {url_for('reset_token', token=token, _external=True)} If you did not make this request please ignore this email."
 
 
 # Create a request for password reset
