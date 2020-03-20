@@ -86,3 +86,10 @@ class RequestResetForm(FlaskForm):
         if email is None:
             raise ValidationError("There is no account using that email address.")
 
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField("Password", validators=[DataRequired()])
+    confirm_password = PasswordField(
+        "ConfirmPassword", validators=[DataRequired(), EqualTo("password")]
+    )
+    submit = SubmitField("Reset Password")
