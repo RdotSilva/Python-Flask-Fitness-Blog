@@ -225,7 +225,7 @@ def user_posts(username):
 def reset_request():
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
-        return redirect("home")
+        return redirect(url_for("home"))
     form = RequestResetForm()
     return render_template("reset_request.html", title="Reset Password", form=form)
 
@@ -235,13 +235,13 @@ def reset_request():
 def reset_token(token):
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
-        return redirect("home")
+        return redirect(url_for("home"))
     # Call the verify_reset_token method from User model, return user if token is valid
     user = User.verify_reset_token(token)
     # Token invalid
     if user is None:
         flash("That is an invalid or expired token", "warning")
-        return redirect(url_form("reset_request"))
+        return redirect(url_for("reset_request"))
     # Token Valid send user to reset password form
     form = ResetPasswordForm()
     return render_template("reset_token.html", title="Reset Password", form=form)
