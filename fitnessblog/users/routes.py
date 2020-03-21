@@ -68,7 +68,7 @@ def login():
 @users.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("home"))
+    return redirect(url_for("main.home"))
 
 
 # User account page
@@ -136,7 +136,7 @@ def reset_request():
 def reset_token(token):
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
-        return redirect(url_for("main,home"))
+        return redirect(url_for("main.home"))
     # Call the verify_reset_token method from User model, return user if token is valid
     user = User.verify_reset_token(token)
     # Token invalid
