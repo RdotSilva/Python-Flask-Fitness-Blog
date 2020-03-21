@@ -3,7 +3,7 @@ from flask import Blueprint
 posts = Blueprint("posts", __name__)
 
 # Create a new post
-@app.route("/post/new", methods=["GET", "POST"])
+@posts.route("/post/new", methods=["GET", "POST"])
 @login_required
 def new_post():
     form = PostForm()
@@ -22,14 +22,14 @@ def new_post():
 
 
 # Get a specific post by id
-@app.route("/post/<int:post_id>")
+@posts.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template("post.html", title=post.title, post=post)
 
 
 # Update a post
-@app.route("/post/<int:post_id>/update", methods=["GET", "POST"])
+@posts.route("/post/<int:post_id>/update", methods=["GET", "POST"])
 @login_required
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)
@@ -54,7 +54,7 @@ def update_post(post_id):
 
 
 # Delete a post
-@app.route("/post/<int:post_id>/delete", methods=["POST"])
+@posts.route("/post/<int:post_id>/delete", methods=["POST"])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
