@@ -35,6 +35,6 @@ def send_reset_email(user):
         recipients=[user.email],
     )
     # Compose the email body
-    msg.body = f"To reset your email please visit the following link: {url_for('reset_token', token=token, _external=True)} If you did not make this request please ignore this email."
+    msg.body = f"To reset your email please visit the following link: {url_for('users.reset_token', token=token, _external=True)} If you did not make this request please ignore this email."
     # Send the message
     mail.send(msg)

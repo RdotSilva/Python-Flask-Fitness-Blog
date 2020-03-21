@@ -36,7 +36,7 @@ def register():
         db.session.commit()
 
         flash("Your account has been created. Please log in", "success")
-        return redirect(url_for("login"))
+        return redirect(url_for("users.login"))
 
     return render_template("register.html", title="Register", form=form)
 
@@ -57,7 +57,7 @@ def login():
             # Check for any next parameter arguments
             next_page = request.args.get("next")
             # Ternary to send user to next page if it exists, otherwise send user to home page
-            return redirect(next_page) if next_page else redirect(url_for("home"))
+            return redirect(next_page) if next_page else redirect(url_for("main.home"))
         else:
             flash("Login unsuccessful. Check email or password", "danger")
 
@@ -86,7 +86,7 @@ def account():
         current_user.email = form.email.data
         db.session.commit()
         flash("Your account has been updated!", "success")
-        return redirect(url_for("account"))
+        return redirect(url_for("users.account"))
     elif request.method == "GET":
         form.username.data = current_user.username
         form.email.data = current_user.email
@@ -120,14 +120,14 @@ def user_posts(username):
 def reset_request():
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
-        return redirect(url_for("home"))
+        return redirect(url_for("main.home"))
     form = RequestResetForm()
     # If valid form is submitted get the user based off of email, and send that user an email with token
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
         flash("An email has been sent with instructions to reset your password", "info")
-        return redirect(url_for("login"))
+        return redirect(url_for("users.login"))
     return render_template("reset_request.html", title="Reset Password", form=form)
 
 
@@ -136,13 +136,13 @@ def reset_request():
 def reset_token(token):
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
-        return redirect(url_for("home"))
+        return redirect(url_for("main,home"))
     # Call the verify_reset_token method from User model, return user if token is valid
     user = User.verify_reset_token(token)
     # Token invalid
     if user is None:
         flash("That is an invalid or expired token", "warning")
-        return redirect(url_for("reset_request"))
+        return redirect(url_for("users.reset_request"))
     # Token Valid send user to reset password form
     form = ResetPasswordForm()
     if form.validate_on_submit():
@@ -154,5 +154,5 @@ def reset_token(token):
         user.password = hashed_password
         db.session.commit()
         flash("Password has been updated! Please log in", "success")
-        return redirect(url_for("login"))
+        return redirect(url_for("users.login"))
     return render_template("reset_token.html", title="Reset Password", form=form)
