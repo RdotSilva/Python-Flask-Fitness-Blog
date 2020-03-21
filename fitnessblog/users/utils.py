@@ -15,3 +15,19 @@ def save_picture(form_picture):
     # Save profile picture to path above
     image.save(picture_path)
     return picture_filename
+
+
+# Send user reset password email with token
+def send_reset_email(user):
+    # Get token
+    token = user.get_reset_token()
+    # Send user email message with token
+    msg = Message(
+        "Password Reset Request",
+        sender="noreply@rdotsilva.com",
+        recipients=[user.email],
+    )
+    # Compose the email body
+    msg.body = f"To reset your email please visit the following link: {url_for('reset_token', token=token, _external=True)} If you did not make this request please ignore this email."
+    # Send the message
+    mail.send(msg)
