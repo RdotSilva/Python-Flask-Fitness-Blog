@@ -21,7 +21,7 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
 # Set initial login view & message
-login_manager.login_view = "login"
+login_manager.login_view = "users.login"
 login_manager.login_message_category = "info"
 
 # Mail config settings
