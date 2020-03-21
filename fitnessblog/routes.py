@@ -17,19 +17,3 @@ from flask_login import login_user, current_user, logout_user, login_required
 from fitnessblog import app, db, bcrypt, mail
 from flask_mail import Message
 
-# Handle multiple routes using the same function
-@app.route("/")
-@app.route("/home")
-# url_for refers to the function name below (home)
-def home():
-    # Get page argument (start at default page 1)
-    page = request.args.get("page", 1, type=int)
-    # Fetch all posts from db sorting by date desc, using pagination
-    # Page is taken from arg above, per_page is number of results per page
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
-    return render_template("home.html", posts=posts)
-
-
-@app.route("/about")
-def about():
-    return render_template("about.html", title="About")
