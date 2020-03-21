@@ -32,4 +32,12 @@ app.config["MAIL_USERNAME"] = MAIL_USER
 app.config["MAIL_PASSWORD"] = MAIL_PASS
 mail = Mail(app)
 
-from fitnessblog import routes
+# Import routes from Blueprints
+from fitnessblog.users.routes import users
+from fitnessblog.posts.routes import posts
+from fitnessblog.main.routes import main
+
+# Register routes from Blueprints
+app.register_blueprint(users)
+app.register_blueprint(posts)
+app.register_blueprint(main)
