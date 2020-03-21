@@ -35,25 +35,6 @@ def about():
     return render_template("about.html", title="About")
 
 
-# Save user profile picture
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    # Split filename to get the file extension. Using _ as variable for f_name because it will be unused
-    _, f_ext = os.path.splitext(form_picture.filename)
-    # Create new picture file name using hex and file extension
-    picture_filename = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, "static/profile_pics", picture_filename)
-
-    # Resize picture
-    output_size = (125, 125)
-    image = Image.open(form_picture)
-    image.thumbnail(output_size)
-
-    # Save profile picture to path above
-    image.save(picture_path)
-    return picture_filename
-
-
 # User account page
 @app.route("/account", methods=["GET", "POST"])
 @login_required
