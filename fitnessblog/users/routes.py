@@ -4,7 +4,7 @@ from flask import Blueprint
 users = Blueprint("users", __name__)
 
 # Registration route using the register form in forms.py
-@app.route("/register", methods=["GET", "POST"])
+@users.route("/register", methods=["GET", "POST"])
 def register():
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
@@ -31,7 +31,7 @@ def register():
 
 
 # Login route using the login form in forms.py
-@app.route("/login", methods=["GET", "POST"])
+@users.route("/login", methods=["GET", "POST"])
 def login():
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
@@ -54,14 +54,14 @@ def login():
 
 
 # Log user out and redirect to home page
-@app.route("/logout")
+@users.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("home"))
 
 
 # User account page
-@app.route("/account", methods=["GET", "POST"])
+@users.route("/account", methods=["GET", "POST"])
 @login_required
 def account():
     form = UpdateAccountForm()
@@ -87,7 +87,7 @@ def account():
 
 
 # Show all posts by specific user
-@app.route("/user/<string:username>")
+@users.route("/user/<string:username>")
 # url_for refers to the function name below (home)
 def user_posts(username):
     # Get page argument (start at default page 1)
@@ -105,7 +105,7 @@ def user_posts(username):
 
 
 # Create a request for password reset
-@app.route("/reset_password", methods=["GET", "POST"])
+@users.route("/reset_password", methods=["GET", "POST"])
 def reset_request():
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
@@ -121,7 +121,7 @@ def reset_request():
 
 
 # Reset password using token
-@app.route("/reset_password/<token>", methods=["GET", "POST"])
+@users.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_token(token):
     # If user already signed in redirect to home page
     if current_user.is_authenticated:
