@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI, MAIL_USER, MAIL_PASS
+from config_secret import SECRET_KEY, SQLALCHEMY_DATABASE_URI, MAIL_USER, MAIL_PASS
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
