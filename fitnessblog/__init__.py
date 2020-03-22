@@ -3,8 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from fitnessblog.config import Config
 
 app = Flask(__name__)
+
+# Use config values from config file
+app.config.from_object(Config)
 
 
 # Create DB instance
