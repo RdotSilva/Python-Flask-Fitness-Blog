@@ -1,8 +1,9 @@
-from fitnessblog import db, login_manager, app
+from fitnessblog import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from config_secret import SECRET
+from flask import current_app
 
 
 @login_manager.user_loader

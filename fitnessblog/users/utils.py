@@ -3,7 +3,8 @@ import secrets
 from PIL import Image
 from flask import url_for
 from flask_mail import Message
-from fitnessblog import app, mail
+from fitnessblog import mail
+from flask import current_app
 
 # Save user profile picture
 def save_picture(form_picture):
@@ -12,7 +13,9 @@ def save_picture(form_picture):
     _, f_ext = os.path.splitext(form_picture.filename)
     # Create new picture file name using hex and file extension
     picture_filename = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, "static/profile_pics", picture_filename)
+    picture_path = os.path.join(
+        current_app.root_path, "static/profile_pics", picture_filename
+    )
 
     # Resize picture
     output_size = (125, 125)
