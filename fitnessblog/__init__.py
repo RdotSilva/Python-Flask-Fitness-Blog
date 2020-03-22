@@ -1,15 +1,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from config_secret import SECRET_KEY, SQLALCHEMY_DATABASE_URI, MAIL_USER, MAIL_PASS
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 
 app = Flask(__name__)
 
-# Config variables imported from config.py
-app.config["SECRET_KEY"] = SECRET_KEY
-app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 
 # Create DB instance
 db = SQLAlchemy(app)
@@ -24,12 +20,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = "users.login"
 login_manager.login_message_category = "info"
 
-# Mail config settings
-app.config["MAIL_SERVER"] = "smtp.googlemail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = MAIL_USER
-app.config["MAIL_PASSWORD"] = MAIL_PASS
+
 mail = Mail(app)
 
 # Import routes from Blueprints
