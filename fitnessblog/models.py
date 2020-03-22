@@ -2,7 +2,7 @@ from fitnessblog import db, login_manager, app
 from datetime import datetime
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from config import SECRET_KEY
+from config_secret import SECRET
 
 
 @login_manager.user_loader
@@ -22,13 +22,13 @@ class User(db.Model, UserMixin):
 
     # Create a reset token using secret
     def get_reset_token(self, expires_sec=1800):
-        s = Serializer(SECRET_KEY, expires_sec)
+        s = Serializer(SECRET, expires_sec)
         return s.dumps({"user_id": self.id}).decode("utf-8")
 
     # Verify the reset token and return user if good
     @staticmethod
     def verify_reset_token(token):
-        s = Serializer(SECRET_KEY)
+        s = Serializer(SECRET)
         try:
             user_id = s.loads(token)["user_id"]
         except:
