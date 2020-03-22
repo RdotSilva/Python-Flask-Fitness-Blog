@@ -38,10 +38,12 @@ def create_app(config_class=Config):
     from fitnessblog.users.routes import users
     from fitnessblog.posts.routes import posts
     from fitnessblog.main.routes import main
+    from fitnessblog.errors.handlers import errors
 
     # Register routes from Blueprints
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
 
     return app
