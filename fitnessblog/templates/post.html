@@ -6,7 +6,7 @@
       <div class="article-metadata">
         <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
         <small class="text-muted">{{ post.date_posted.strftime('%m-%d-%Y %I:%M %p') }}</small>
-        <a href="#" class="badge badge-info">{{ post.category}}</a>
+        <a href="{{ url_for('posts.filter_by_category', category=post.category) }}" class="badge badge-info">{{ post.category}}</a>
         {% if post.author == current_user %}
           <div>
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
