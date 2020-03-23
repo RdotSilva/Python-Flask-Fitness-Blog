@@ -46,6 +46,7 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
+    category = db.Column(db.Text, nullable=False)
     # Set foreign key relationship for user
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
