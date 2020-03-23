@@ -81,5 +81,6 @@ def delete_post(post_id):
 @posts.route("/category/<string:category>", methods=["GET"])
 @login_required
 def filter_by_category(category):
-    post = Post.query.filter_by(category=category).all()
-    return redirect(url_for("main.home"))
+    page = request.args.get("page", 1, type=int)
+    posts = Post.query.filter_by(category=category).paginate(page=page, per_page=5)
+    return render_template("category_list.html", posts=posts)
