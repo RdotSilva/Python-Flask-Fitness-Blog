@@ -7,7 +7,7 @@ class PostForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     content = TextAreaField("Content", validators=[DataRequired()])
     category = SelectField(
-        "Post Category",
+        "Category",
         choices=[
             ("cardio", "Cardio"),
             ("weight", "Weight Training"),
