@@ -75,3 +75,11 @@ def delete_post(post_id):
     db.session.commit()
     flash("Your post has been deleted!", "success")
     return redirect(url_for("main.home"))
+
+
+# Filter posts by category
+@posts.route("/category/<string:category>", methods=["GET"])
+@login_required
+def filter_by_category(category):
+    post = Post.query.filter_by(category=category).all()
+    return redirect(url_for("main.home"))
