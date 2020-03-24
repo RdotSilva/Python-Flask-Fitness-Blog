@@ -32,7 +32,7 @@ def register():
             username=form.username.data,
             email=form.email.data,
             password=hashed_password,
-            account_type=form.account_type.data,
+            profile_type=form.profile_type.data,
         )
         # Save user to db
         db.session.add(user)
@@ -87,12 +87,14 @@ def account():
             current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
+        profile_type = form.profile_type.data
         db.session.commit()
         flash("Your account has been updated!", "success")
         return redirect(url_for("users.account"))
     elif request.method == "GET":
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.profile_type.data = form.profile_type
     # Set profile picture image file
     image_file = url_for("static", filename="profile_pics/" + current_user.image_file)
     return render_template(
