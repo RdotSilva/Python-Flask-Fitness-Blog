@@ -52,6 +52,9 @@ class UpdateAccountForm(FlaskForm):
     picture = FileField(
         "Update Profile Picture", validators=[FileAllowed(["jpg", "png"])]
     )
+    profile_type = RadioField(
+        "Profile Type", choices=[("instructor", "Instructor"), ("student", "Student"),],
+    )
     submit = SubmitField("Update")
     # TODO: Add image update
 
