@@ -29,7 +29,10 @@ def register():
 
         # Construct new user
         user = User(
-            username=form.username.data, email=form.email.data, password=hashed_password
+            username=form.username.data,
+            email=form.email.data,
+            password=hashed_password,
+            account_type=form.account_type.data,
         )
         # Save user to db
         db.session.add(user)
