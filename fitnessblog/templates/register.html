@@ -59,6 +59,16 @@
             </div>
         </fieldset>
         <div class="form-group">
+          {% for subfield in form.profile_type %}
+            <tr>
+              <td>{{ subfield }}</td>
+              <td>{{ subfield.label }}</td>
+            </tr>
+          {% endfor %}
+          <p>Select Student if you are still learning, or Instructor if you are able to help others</p> 
+          <small>You can edit this option in the account page after sign up</small>
+        </div>
+        <div class="form-group">
           {{ form.submit(class="btn btn-outline-info") }}
         </div>
       </form>
