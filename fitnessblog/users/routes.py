@@ -87,7 +87,7 @@ def account():
             current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
-        profile_type = form.profile_type.data
+        current_user.profile_type = form.profile_type.data
         db.session.commit()
         flash("Your account has been updated!", "success")
         return redirect(url_for("users.account"))
