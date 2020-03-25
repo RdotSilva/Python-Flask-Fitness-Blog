@@ -39,6 +39,15 @@
               {% endif %}
             </div>
             <div class="form-group">
+              <!--TODO: Add form validation for radio-->
+              {% for subfield in form.profile_type %}
+                <tr>
+                  <td>{{ subfield }}</td>
+                  <td>{{ subfield.label }}</td>
+                </tr>
+              {% endfor %}
+            </div>
+            <div class="form-group">
               {{ form.picture.label() }}
               {{ form.picture(class="form-control-file") }}
               {% if form.picture.errors %}
