@@ -91,9 +91,9 @@ def filter_by_category(category):
 @posts.route("/latest", methods=["GET"])
 @login_required
 def latest_posts():
-    time_24_hours_ago = datetime.datetime.now() - datetime.timedelta(days=1)
+    time_24_hours_ago = datetime.datetime.now() - datetime.timedelta(hours=24)
     page = request.args.get("page", 1, type=int)
-    posts = Post.query.filter_by(date_posted=time_24_hours_ago).paginate(
+    posts = Post.query.filter(Post.date_posted > time_24_hours_ago).paginate(
         page=page, per_page=5
     )
     return render_template("latest_posts.html", posts=posts)
