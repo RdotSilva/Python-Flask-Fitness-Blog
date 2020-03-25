@@ -8,7 +8,7 @@
           <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
           <small class="text-muted">{{ post.date_posted.strftime('%m-%d-%Y %I:%M %p') }}</small>
           <a href="{{ url_for('posts.filter_by_category', category=post.category) }}" class="badge badge-info">{{ post.category}}</a>
-          <p class="text-secondary">{{ current_user.profile_type.capitalize() }}</p>
+          <p class="text-secondary">{{ current_user.profile_type.capitalize() }}</p> <!--TODO: UPDATE THIS TO NOT USE CURRENT USER, IT MUST US THE POST AUTHOR DATA-->
         </div>
         <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
         <p class="article-content">{{ post.content }}</p>
