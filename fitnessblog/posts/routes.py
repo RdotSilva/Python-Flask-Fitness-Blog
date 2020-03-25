@@ -1,3 +1,4 @@
+import datetime
 from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
 from flask_login import current_user, login_required
 from fitnessblog import db
@@ -86,10 +87,13 @@ def filter_by_category(category):
     return render_template("category_list.html", posts=posts)
 
 
-# Filter posts by latest
+# Filter posts by latest posts within 24 hours
 @posts.route("/latest", methods=["GET"])
 @login_required
 def latest_posts():
+    time_24_hours_ago = datetime.datetime.now() - datetime.timedelta(days=1)
     page = request.args.get("page", 1, type=int)
-    posts = Post.query.filter_by(category=category).paginate(page=page, per_page=5)
+    posts = Post.query.filter_by(date_posted=time_24_hours_ago).paginate(
+        page=page, per_page=5
+    )
     return render_template("latest_posts.html", posts=posts)
