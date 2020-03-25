@@ -84,3 +84,12 @@ def filter_by_category(category):
     page = request.args.get("page", 1, type=int)
     posts = Post.query.filter_by(category=category).paginate(page=page, per_page=5)
     return render_template("category_list.html", posts=posts)
+
+
+# Filter posts by latest
+@posts.route("/latest", methods=["GET"])
+@login_required
+def latest_posts():
+    page = request.args.get("page", 1, type=int)
+    posts = Post.query.filter_by(category=category).paginate(page=page, per_page=5)
+    return render_template("latest_posts.html", posts=posts)
